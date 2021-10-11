@@ -1,0 +1,97 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+// time complexity o(n)
+
+struct nod
+{
+    int data;
+    nod* left;
+    nod* right;
+
+    nod(int val)
+    {
+        data=val;
+        left=NULL;
+        right=NULL;
+    }
+    
+};
+
+void zigzagtraversal(nod* root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+
+    stack<nod*>currlevel;
+    stack<nod*>nextlevel;
+    
+    bool lefttoright=true;
+
+    currlevel.push(root);
+
+    while (!currlevel.empty())
+    {
+        nod* temp=currlevel.top();
+        currlevel.pop();
+
+        
+            cout<<temp->data<<" ";
+ 
+
+        if(lefttoright)
+        {
+            if(temp->left)
+            {
+                nextlevel.push(temp->left);
+            }
+            if(temp->right)
+            {
+                nextlevel.push(temp->right);
+            }
+        }
+
+        else
+        {
+            if(temp->right)
+            {
+                nextlevel.push(temp->right);
+            }
+            if(temp->left)
+            {
+                nextlevel.push(temp->left);
+            }
+        }
+       
+      if(currlevel.empty())
+      {
+          lefttoright=!lefttoright;
+          swap(currlevel,nextlevel);
+      }
+    }
+}
+
+int main()
+{
+    /*
+        12  
+       /  \
+      9    15
+     / \
+    5   10 
+
+    */
+
+   nod* root=new nod(12);
+   root->left=new nod(9);
+   root->right=new nod(15);
+   root->left->right=new nod(10);
+   root->left->left=new nod(5);
+
+   zigzagtraversal(root);
+
+    return 0;
+}
